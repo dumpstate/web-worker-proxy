@@ -1,0 +1,23 @@
+{
+  "name": "web-worker-proxy",
+  "version": "0.1.0",
+  "description": "Opinionated web worker communication.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dumpstate/web-worker-proxy.git"
+  },
+  "author": "asadowski@mailbox.org",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dumpstate/web-worker-proxy/issues"
+  },
+  "homepage": "https://github.com/dumpstate/web-worker-proxy#readme",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}
