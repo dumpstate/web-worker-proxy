@@ -9,9 +9,9 @@ module.exports = function (config) {
             'karma-typescript',
         ],
         files: [
-            { pattern: 'src/**/*.ts' },
             { pattern: 'node_modules/expect.js/index.js' },
-            { pattern: 'test/**/*.test.ts' },
+            { pattern: 'src/**/*.ts' },
+            { pattern: 'test/**/*.ts' },
             {
                 pattern: 'build/foo.worker.js',
                 included: false,
@@ -22,7 +22,7 @@ module.exports = function (config) {
             'src/**/*.ts': [
                 'karma-typescript',
             ],
-            'test/**/*.test.ts': [
+            'test/**/*.ts': [
                 'karma-typescript',
             ],
         },

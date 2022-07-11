@@ -1,12 +1,27 @@
 import { workerProxy } from '../src/workerProxy'
-import { Foo } from './workers/foo.worker'
+import { Foo } from './Foo'
 
 describe('workerProxy', async () => {
     const WORKER_PATH = 'base/build/foo.worker.js'
+    const expectedFoo = new Foo()
 
     it('should call worker', async () => {
         const foo = await workerProxy<Foo>(WORKER_PATH)
-        expect(await foo.foo()).to.be('bar')
+        expect(await foo.foo()).to.be(expectedFoo.foo())
+    })
+
+    it('should get property value', async () => {
+        const foo = await workerProxy<Foo>(WORKER_PATH)
+        const res: string = await foo.baz()
+
+        expect(res).to.be(expectedFoo.baz)
+    })
+
+    it('should call async worker method', async () => {
+        const foo = await workerProxy<Foo>(WORKER_PATH)
+        const res: string = await foo.asyncFoo()
+
+        expect(res).to.be(await expectedFoo.asyncFoo())
     })
 
     it('should call worker multiple times', async () => {
@@ -17,7 +32,11 @@ describe('workerProxy', async () => {
             foo.foo(),
         ])
 
-        expect(res).to.eql(['bar', 'baz', 'bar'])
+        expect(res).to.eql([
+            expectedFoo.foo(),
+            expectedFoo.bar(),
+            expectedFoo.foo(),
+        ])
     })
 
     it('should pass arguments to worker and return it back', async () => {
@@ -32,7 +51,7 @@ describe('workerProxy', async () => {
         ]
         const res = await foo.identity(...args)
 
-        expect(res).to.eql(args)
+        expect(res).to.eql(expectedFoo.identity(...args))
     })
 
     it('should timeout if worker fails to load', async () => {

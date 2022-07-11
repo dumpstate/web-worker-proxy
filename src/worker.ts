@@ -10,10 +10,16 @@ export async function run<T>(init: () => Promise<T>) {
         let error: Error | null = null
 
         try {
-            result = await (
-                Promise.resolve()
-                    .then(() => (target as any)[body.method](...body.args))
-            )
+            const prop = (target as any)[body.method]
+
+            if (typeof prop === 'function') {
+                result = await (
+                    Promise.resolve()
+                        .then(() => (target as any)[body.method](...body.args))
+                )
+            } else {
+                result = prop
+            }
         } catch (err: any) {
             error = err
         } finally {

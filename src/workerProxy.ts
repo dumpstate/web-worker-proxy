@@ -10,10 +10,14 @@ type CallablePropNames<T> = {
     [k in keyof T]: T[k] extends Function ? k : never
 }[keyof T]
 
-type CallableProps<T> = Pick<T, CallablePropNames<T>>
+type NonCallablePropNames<T> = {
+    [k in keyof T]: T[k] extends Function ? never : k
+}[keyof T]
 
 export type ProxyType<T> = {
-    [k in keyof CallableProps<T>]: T[k] extends (...args: any[]) => any ? (...args: Parameters<T[k]>) => Promise<ReturnType<T[k]>> : never
+    [k in keyof Pick<T, CallablePropNames<T>>]: T[k] extends (...args: any[]) => any ? (...args: Parameters<T[k]>) => Promise<ReturnType<T[k]>> : never
+} & {
+    [p in keyof Pick<T, NonCallablePropNames<T>>]: () => Promise<T[p]>
 }
 
 export interface WorkerProxyOpts {
