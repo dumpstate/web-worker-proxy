@@ -2,8 +2,6 @@ import { Message, MessageType } from './protocol'
 
 export async function run<T>(init: () => Promise<T>) {
     const target = await init()
-    const requests: Message[] = []
-    let running: Promise<void> | null = null
 
     async function processRequest(request: Message) {
         const { id, body } = request
@@ -37,23 +35,8 @@ export async function run<T>(init: () => Promise<T>) {
         }
     }
 
-    async function start() {
-        while (requests.length) {
-            const request = requests.shift()
-            if (!request) { break }
-
-            await processRequest(request)
-        }
-    }
-
     self.onmessage = (evt) => {
-        requests.push(evt.data)
-
-        if (!running) {
-            running = start().finally(() => {
-                running = null
-            })
-        }
+        processRequest(evt.data)
     }
 
     self.postMessage({

@@ -12,6 +12,10 @@
             "es6",
             "es2018",
             "dom"
+        ],
+        "types": [
+            "mocha",
+            "expect.js"
         ]
     },
     "include": [

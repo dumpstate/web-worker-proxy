@@ -1,8 +1,9 @@
 import { Message, MessageType } from './protocol'
-import { idGenerator, isNumber } from './utils'
+import { idGenerator } from './utils'
 
-export interface WorkerProxyOpts {
-    requestTimeout?: number
+const WORKER_READY_REQUEST_ID = 0
+const DEFAULT_OPTS = {
+    loadTimeout: 5000,
 }
 
 type CallablePropNames<T> = {
@@ -15,14 +16,19 @@ export type ProxyType<T> = {
     [k in keyof CallableProps<T>]: T[k] extends (...args: any[]) => any ? (...args: Parameters<T[k]>) => Promise<ReturnType<T[k]>> : never
 }
 
-export async function workerProxy<T>(path: string, opts: WorkerProxyOpts): Promise<ProxyType<T>> {
+export interface WorkerProxyOpts {
+    readonly loadTimeout: number
+}
+
+export async function workerProxy<T>(path: string, opts: WorkerProxyOpts = DEFAULT_OPTS): Promise<ProxyType<T>> {
     const requests = new Map()
     const ready = new Promise((resolve, reject) => {
-        requests.set(0, [resolve, reject])
+        requests.set(WORKER_READY_REQUEST_ID, [resolve, reject])
     })
+    const { loadTimeout } = opts
     const worker = new Worker(path)
+
     const nextId = idGenerator()
-    const { requestTimeout } = opts
 
     worker.onmessage = (evt) => {
         const { id, type, body } = (evt.data as Message)
@@ -36,6 +42,7 @@ export async function workerProxy<T>(path: string, opts: WorkerProxyOpts): Promi
         requests.delete(id)
 
         switch (type) {
+            case MessageType.ResponseWorkerReady:
             case MessageType.ResponseSuccess:
                 resolve(body)
                 break
@@ -46,18 +53,6 @@ export async function workerProxy<T>(path: string, opts: WorkerProxyOpts): Promi
                 reject(new Error(`Unsupported message type: ${type}`))
                 break
         }
-    }
-
-    function timeout(id: number): void {
-        const request = requests.get(id)
-        if (request === null) {
-            return
-        }
-
-        const [_, reject] = request
-
-        requests.delete(id)
-        reject(new Error('Request timed out'))
     }
 
     const proxy = new Proxy<ProxyType<T>>({} as any, {
@@ -80,14 +75,18 @@ export async function workerProxy<T>(path: string, opts: WorkerProxyOpts): Promi
                             args,
                         },
                     } as Message)
-
-                    if (isNumber(requestTimeout)) {
-                        setTimeout(() => timeout(reqId), requestTimeout)
-                    }
                 })
             }
         }
     })
+
+    setTimeout(() => {
+        const cbks = requests.get(WORKER_READY_REQUEST_ID)
+        if (!cbks) { return }
+        const [_, reject] = cbks
+
+        reject(new Error('Worker failed to load'))
+    }, loadTimeout)
 
     await ready
 

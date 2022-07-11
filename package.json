@@ -1,11 +1,14 @@
 {
   "name": "web-worker-proxy",
   "version": "0.1.0",
-  "description": "Opinionated web worker communication.",
+  "description": "Web worker proxy for JavaScript objects.",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:test": "npm run build:test:worker:ts && npm run build:test:worker:bundle",
+    "build:test:worker:ts": "tsc test/workers/foo.worker.ts --outDir build",
+    "build:test:worker:bundle": "browserify build/test/workers/foo.worker.js -o build/foo.worker.js",
+    "test": "npm run build:test && karma start"
   },
   "repository": {
     "type": "git",
@@ -18,6 +21,15 @@
   },
   "homepage": "https://github.com/dumpstate/web-worker-proxy#readme",
   "devDependencies": {
-    "typescript": "^4.7.4"
+    "@types/expect.js": "^0.3.29",
+    "@types/mocha": "^9.1.1",
+    "expect.js": "^0.3.1",
+    "karma": "^6.4.0",
+    "karma-chrome-launcher": "^3.1.1",
+    "karma-mocha": "^2.0.1",
+    "karma-typescript": "^5.5.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.7.4",
+    "watchify": "^4.0.0"
   }
 }

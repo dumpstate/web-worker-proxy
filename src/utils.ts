@@ -3,7 +3,3 @@ export function idGenerator(): () => number {
 
     return () => ++id
 }
-
-export function isNumber(value: any): boolean {
-    return typeof value === "number"
-}
