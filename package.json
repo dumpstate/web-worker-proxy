@@ -1,8 +1,8 @@
 {
-  "name": "web-worker-proxy",
+  "name": "@dumpstate/web-worker-proxy",
   "version": "0.1.0",
   "description": "Web worker proxy for JavaScript objects.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
     "build:test": "npm run build:test:worker:ts && npm run build:test:worker:bundle",
