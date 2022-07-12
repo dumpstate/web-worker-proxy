@@ -1,6 +1,6 @@
 {
   "name": "@dumpstate/web-worker-proxy",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Web worker proxy for JavaScript objects.",
   "main": "lib/index.js",
   "scripts": {
@@ -8,11 +8,16 @@
     "build:test": "npm run build:test:worker:ts && npm run build:test:worker:bundle",
     "build:test:worker:ts": "tsc test/workers/foo.worker.ts --outDir build",
     "build:test:worker:bundle": "browserify build/test/workers/foo.worker.js -o build/foo.worker.js",
+    "prepublish": "npm run build",
     "test": "npm run build:test && karma start"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/dumpstate/web-worker-proxy.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
+    "access": "public"
   },
   "author": "asadowski@mailbox.org",
   "license": "MIT",

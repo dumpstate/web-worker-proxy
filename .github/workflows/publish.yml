@@ -1,0 +1,22 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_test_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: npm install
+
+    - run: npm test
+
+    - run: |
+        npm config set //npm.pkg.github.com/:_authToken ${TOKEN}
+        npm publish
+      env:
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
