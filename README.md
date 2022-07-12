@@ -2,6 +2,21 @@
 
 Web worker proxy for JavaScript objects.
 
+## Installation
+
+Package is published to GitHub Packages NPM registry. Add to your `.npmrc`:
+
+```
+@dumpstate:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=<GITHUB_TOKEN_WITH>
+```
+
+install package:
+
+```
+npm install @dumpstate/web-worker-proxy --save
+```
+
 ## Usage
 
 1. Define and build _Worker_ script.
