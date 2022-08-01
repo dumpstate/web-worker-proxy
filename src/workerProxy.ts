@@ -51,7 +51,7 @@ export async function workerProxy<T>(path: string, opts: WorkerProxyOpts = DEFAU
                 resolve(body)
                 break
             case MessageType.ResponseFailure:
-                reject(new Error(`Failure from worker: ${body.toString()}`))
+                reject(new Error(body))
                 break
             default:
                 reject(new Error(`Unsupported message type: ${type}`))

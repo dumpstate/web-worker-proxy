@@ -18,4 +18,8 @@ export class Foo {
         return args
     }
 
+    public raise(err: Error) {
+        throw err
+    }
+
 }

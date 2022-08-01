@@ -66,4 +66,20 @@ describe('workerProxy', async () => {
 
         expect(error).to.not.be(null)
     })
+
+    it('it should throw error straight from the worker', async () => {
+        const foo = await workerProxy<Foo>(WORKER_PATH)
+        const errMessage = 'Inner error message'
+        let error = null;
+
+        try {
+            await foo.raise(new Error(errMessage))
+        } catch(err) {
+            error = err
+
+            expect(err.message).to.equal(`Error: ${errMessage}`)
+        }
+
+        expect(error).to.not.be(null)
+    })
 })
