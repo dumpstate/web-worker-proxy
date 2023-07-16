@@ -18,7 +18,7 @@
 		"url": "git+ssh://git@github.com/dumpstate/web-worker-proxy.git"
 	},
 	"publishConfig": {
-		"registry": "https://npm.pkg.github.com/",
+		"registry": "https://registry.npmjs.org/",
 		"access": "public"
 	},
 	"author": "asadowski@mailbox.org",
