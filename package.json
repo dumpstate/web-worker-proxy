@@ -1,40 +1,43 @@
 {
-  "name": "@dumpstate/web-worker-proxy",
-  "version": "0.1.7",
-  "description": "Web worker proxy for JavaScript objects.",
-  "main": "lib/index.js",
-  "scripts": {
-    "build": "tsc",
-    "build:test": "npm run build:test:worker:ts && npm run build:test:worker:bundle",
-    "build:test:worker:ts": "tsc test/workers/foo.worker.ts --outDir build",
-    "build:test:worker:bundle": "browserify build/test/workers/foo.worker.js -o build/foo.worker.js",
-    "prepublish": "npm run build",
-    "test": "npm run build:test && karma start"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/dumpstate/web-worker-proxy.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
-    "access": "public"
-  },
-  "author": "asadowski@mailbox.org",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dumpstate/web-worker-proxy/issues"
-  },
-  "homepage": "https://github.com/dumpstate/web-worker-proxy#readme",
-  "devDependencies": {
-    "@types/expect.js": "^0.3.29",
-    "@types/mocha": "^10.0.1",
-    "expect.js": "^0.3.1",
-    "karma": "^6.4.2",
-    "karma-chrome-launcher": "^3.2.0",
-    "karma-mocha": "^2.0.1",
-    "karma-typescript": "^5.5.4",
-    "mocha": "^10.2.0",
-    "typescript": "^5.1.6",
-    "watchify": "^4.0.0"
-  }
+	"name": "@dumpstate/web-worker-proxy",
+	"version": "0.1.7",
+	"description": "Web worker proxy for JavaScript objects.",
+	"main": "lib/index.js",
+	"scripts": {
+		"build": "tsc",
+		"build:test": "npm run build:test:worker:ts && npm run build:test:worker:bundle",
+		"build:test:worker:ts": "tsc test/workers/foo.worker.ts --outDir build",
+		"build:test:worker:bundle": "browserify build/test/workers/foo.worker.js -o build/foo.worker.js",
+		"lint": "prettier --check .",
+		"prepublish": "npm run build",
+		"style:fix": "prettier --write .",
+		"test": "npm run build:test && karma start"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/dumpstate/web-worker-proxy.git"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/",
+		"access": "public"
+	},
+	"author": "asadowski@mailbox.org",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/dumpstate/web-worker-proxy/issues"
+	},
+	"homepage": "https://github.com/dumpstate/web-worker-proxy#readme",
+	"devDependencies": {
+		"@types/expect.js": "^0.3.29",
+		"@types/mocha": "^10.0.1",
+		"expect.js": "^0.3.1",
+		"karma": "^6.4.2",
+		"karma-chrome-launcher": "^3.2.0",
+		"karma-mocha": "^2.0.1",
+		"karma-typescript": "^5.5.4",
+		"mocha": "^10.2.0",
+		"prettier": "^3.0.0",
+		"typescript": "^5.1.6",
+		"watchify": "^4.0.0"
+	}
 }

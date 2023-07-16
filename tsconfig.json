@@ -1,24 +1,14 @@
 {
-    "compilerOptions": {
-        "rootDir": "src",
-        "outDir": "lib",
-        "declaration": true,
-        "target": "es5",
-        "strict": true,
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "lib": [
-            "es5",
-            "es6",
-            "es2018",
-            "dom"
-        ],
-        "types": [
-            "mocha",
-            "expect.js"
-        ]
-    },
-    "include": [
-        "src"
-    ]
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "lib",
+		"declaration": true,
+		"target": "es5",
+		"strict": true,
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"lib": ["es5", "es6", "es2018", "dom"],
+		"types": ["mocha", "expect.js"]
+	},
+	"include": ["src"]
 }

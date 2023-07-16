@@ -1,25 +1,23 @@
 export class Foo {
+	public baz: string = "foo"
 
-    public baz: string = 'foo'
+	public foo(): string {
+		return "bar"
+	}
 
-    public foo(): string {
-        return 'bar'
-    }
+	public asyncFoo(): Promise<string> {
+		return Promise.resolve("async bar")
+	}
 
-    public asyncFoo(): Promise<string> {
-        return Promise.resolve('async bar')
-    }
+	public bar(): string {
+		return "baz"
+	}
 
-    public bar(): string {
-        return 'baz'
-    }
+	public identity(...args: any[]) {
+		return args
+	}
 
-    public identity(...args: any[]) {
-        return args
-    }
-
-    public raise(err: Error) {
-        throw err
-    }
-
+	public raise(err: Error) {
+		throw err
+	}
 }

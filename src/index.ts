@@ -1,2 +1,2 @@
-export * from './worker'
-export * from './workerProxy'
+export * from "./worker"
+export * from "./workerProxy"
